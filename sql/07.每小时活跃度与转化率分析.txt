@@ -1,0 +1,9 @@
+select 
+    hour(event_time) as hr,
+    count(*) as 总行为次数,
+    count(distinct user_id) as 活跃用户数,
+    sum(case when event_type='purchase' then 1 else 0 end) as 购买次数,
+    concat(round(sum(case when event_type='purchase' then 1 else 0 end)/count(*)*100,2),'%') as 转化率
+from userbehavior 
+group by hr 
+order by hr
